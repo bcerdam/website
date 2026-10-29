@@ -1,5 +1,11 @@
 name: "Bruno Cerda Mardini"
-summary: "I work on world models, representation learning, and sample-efficient reinforcement learning."
+summary: "Master's student at PUC focused on machine learning, world models, and reinforcement learning."
+bio: |
+  I'm a master's student in my third semester at PUC (Pontifical Catholic University of Chile), advised by [Professor Hans Lobel](https://scholar.google.com/citations?user=oKYALakAAAAJ&hl=en).
+
+  In general, I'm interested in machine learning. At the moment, I'm deeply invested in world models, specifically those that enable reinforcement learning agents to learn viable policies in diverse environments.
+
+  Before starting my master's degree, I obtained a bachelor's degree in Engineering with a major in Data Science at PUC.
 email: "bcmardini@gmail.com"
 linkedin: "https://www.linkedin.com/in/bruno-cerda-mardini-04658520b/"
 github: "https://github.com/bcerdam"

@@ -83,12 +83,20 @@ title: "Bruno Cerda Mardini"
         object-position: center 30%;
       }
 
-      .summary {
+      .bio {
         max-width: 650px;
         margin-bottom: 27px;
         color: #49544d;
-        font-size: clamp(18px, 2.5vw, 21px);
-        line-height: 1.55;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .bio p {
+        margin: 0 0 14px;
+      }
+
+      .bio p:last-child {
+        margin-bottom: 0;
       }
 
       .profile-links {
@@ -264,7 +272,7 @@ title: "Bruno Cerda Mardini"
         <section class="intro" aria-labelledby="name">
           <div>
             <h1 id="name">{{ site.data.profile.name | escape }}</h1>
-            <p class="summary">{{ site.data.profile.summary | escape }}</p>
+            <div class="bio">{{ site.data.profile.bio | markdownify }}</div>
             <div class="profile-links" aria-label="Profile links">
               <a href="{{ site.data.profile.linkedin | escape }}">LinkedIn</a>
               <a href="{{ site.data.profile.github | escape }}">GitHub</a>
@@ -324,7 +332,6 @@ title: "Bruno Cerda Mardini"
 
       <footer class="footer">
         <span>© {{ site.time | date: '%Y' }} {{ site.data.profile.name | escape }}</span>
-        <span><a href="#top">Back to top</a></span>
       </footer>
     </div>
   </body>
