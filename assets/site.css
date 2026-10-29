@@ -39,24 +39,6 @@ a:hover {
   margin: 0 auto;
 }
 
-.site-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 27px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-nav {
-  display: flex;
-  gap: 24px;
-}
-
-nav a {
-  color: var(--muted);
-  font-size: 14px;
-  text-decoration: none;
-}
-
 .article {
   padding: 52px 0 70px;
 }
@@ -178,15 +160,6 @@ nav a {
 @media (max-width: 600px) {
   .page {
     width: min(100% - 34px, 860px);
-  }
-
-  .site-header {
-    justify-content: flex-start;
-    padding: 20px 0;
-  }
-
-  nav {
-    gap: 19px;
   }
 
   .article {

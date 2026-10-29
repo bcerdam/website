@@ -2,7 +2,6 @@
 title: "Do JEPA-Style Latents Improve Atari Scores in Dreamer-Like Agents?"
 type: "Technical write-up"
 date: "2026-10-01"
-summary: "A comparison of deterministic continuous and stochastic discrete latent representations in Dreamer-like Atari world models."
 permalink: /projects/jepa-style-latents-atari/
 ---
 

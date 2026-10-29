@@ -10,7 +10,7 @@ Add an item to `_data/news.yml` with a date, short text, URL, and an `external` 
 
 ## Projects and write-ups
 
-Add one Markdown file under `_projects/` for each preprint, paper, or technical write-up. The project list is sorted by date, oldest first. A project's title links to its `external_url` when present; otherwise it links to the generated project page.
+Add one Markdown file under `_projects/` for each preprint, paper, or technical write-up. The project list is sorted by date, newest first. A project's title links to its `external_url` when present; otherwise it links to the generated project page.
 
 ```yaml
 ---
