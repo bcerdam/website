@@ -13,7 +13,7 @@ This brings us to the core question of this write-up: **Should SEWMs of the Drea
 
 ## Architecture
 
-The world model used in this write-up is called UWM (Unnamed World Model). I use this name because it is my model and is currently under double-blind review for ICLR 2027.
+The world model used in this write-up is called UWM (Unnamed World Model). UWM is based on my from-scratch replication of [STORM: Efficient Stochastic Transformer based World Models for Reinforcement Learning](https://arxiv.org/abs/2310.09615) by Zhang et al. (2023). My implementation is available in the [STORM-Replication GitHub repository](https://github.com/bcerdam/STORM-Replication). I use the name UWM because it is my model and is currently under double-blind review for ICLR 2027.
 
 ### Structure of the latent
 
