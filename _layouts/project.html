@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ page.summary | default: site.description | escape }}">
+    <title>{{ page.title | escape }} · {{ site.title | escape }}</title>
+    <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <nav aria-label="Main navigation">
+          <a href="{{ '/' | relative_url }}#news">News</a>
+          <a href="{{ '/' | relative_url }}#projects">Projects</a>
+        </nav>
+      </header>
+      <main>
+        <article class="article">
+          <a class="back-link" href="{{ '/' | relative_url }}#projects">← Back to projects</a>
+          <header class="article-header">
+            <p class="project-type">{{ page.type | escape }} · {{ page.date | date: '%B %Y' }}</p>
+            <h1>{{ page.title | escape }}</h1>
+            {% if page.summary %}<p class="article-summary">{{ page.summary | escape }}</p>{% endif %}
+            {% if page.external_url %}<p class="article-external"><a href="{{ page.external_url | escape }}">{{ page.external_label | default: "View online ↗" | escape }}</a></p>{% endif %}
+          </header>
+          <div class="article-body">{{ content }}</div>
+        </article>
+      </main>
+      <footer class="footer">
+        <span>© {{ site.time | date: '%Y' }} {{ site.data.profile.name | escape }}</span>
+        <span><a href="{{ '/' | relative_url }}">Home</a></span>
+      </footer>
+    </div>
+  </body>
+</html>

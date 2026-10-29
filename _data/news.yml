@@ -1,0 +1,8 @@
+- date: "2025-07-03"
+  text: "bioRxiv preprint: XBP1s as a therapeutic target to preserve retinal function during aging and neurodegeneration"
+  url: "https://www.biorxiv.org/content/10.1101/2025.07.03.662890v1"
+  external: true
+- date: "2026-10-01"
+  text: "Technical write-up: Do JEPA-Style Latents Improve Atari Scores in Dreamer-Like Agents?"
+  url: "/projects/jepa-style-latents-atari/"
+  external: false

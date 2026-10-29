@@ -1,0 +1,24 @@
+title: "Bruno Cerda Mardini"
+description: "I work on world models, representation learning, and sample-efficient reinforcement learning."
+url: ""
+baseurl: ""
+markdown: kramdown
+collections:
+  projects:
+    output: true
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+exclude:
+  - README.md
+  - blog/technical-write-up-1/tw2-latex.tex
+  - blog/technical-write-up-1/tw2-latex.pdf
+  - blog/technical-write-up-1/tw2.pdf
+  - blog/technical-write-up-1/tw2-latex.log
+  - blog/technical-write-up-1/references.bib
+  - blog/technical-write-up-1/rewards_per_game_latent_comparison.pdf
+  - blog/technical-write-up-1/diagrams/*.tex
+  - blog/technical-write-up-1/diagrams/*.pdf
