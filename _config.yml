@@ -1,7 +1,7 @@
 title: "Bruno Cerda Mardini"
 description: "I work on world models, representation learning, and sample-efficient reinforcement learning."
-url: ""
-baseurl: ""
+url: "https://bcerdam.github.io"
+baseurl: "/website"
 markdown: kramdown
 collections:
   projects:
