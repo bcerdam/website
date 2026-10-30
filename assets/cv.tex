@@ -1,0 +1,93 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.8cm, top=1.6cm, bottom=1.6cm]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage[default]{sourcesanspro}
+\usepackage{tabularx}
+\usepackage{microtype}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    pdftitle={Bruno Cerda Mardini - CV},
+    pdfauthor={Bruno Cerda Mardini}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% Section styling with full-width underline
+\newcommand{\cvsection}[1]{%
+    \vspace{10pt}%
+    {\large\textbf{\MakeUppercase{#1}}}%
+    \vspace{3pt}%
+    \hrule height 0.6pt%
+    \vspace{6pt}%
+}
+
+% Custom list styling for tight, clean bullet points
+\setlist[itemize]{label=\textbullet, leftmargin=1.2em, labelsep=0.5em, itemsep=2.5pt, parsep=0pt, topsep=2pt}
+\setlist[itemize,2]{label=\textbullet, leftmargin=1.2em, labelsep=0.5em, itemsep=2pt, parsep=0pt, topsep=2pt}
+
+\begin{document}
+
+% ------------------ HEADER ------------------
+{\LARGE\textbf{Bruno Cerda Mardini}}\\[4pt]
+\href{mailto:bcmardini@gmail.com}{bcmardini@gmail.com} \ $\cdot$ \ \faGithub\ \href{https://github.com/bcerdam}{bcerdam} \ $\cdot$ \ \faLinkedin\ \href{https://www.linkedin.com/in/bruno-cerda-mardini-04658520b/}{Bruno Cerda} \ $\cdot$ \ \href{https://bcerdam.github.io/website/}{Blog}
+
+\vspace{6pt}
+\hrule height 0.6pt
+\vspace{2pt}
+
+% ------------------ TECHNICAL SKILLS ------------------
+\cvsection{Technical Skills}
+\begin{tabular}{@{}p{5.2cm}l@{}}
+\textbf{Programming Languages} & Python, C, C++ \\
+\textbf{Tools} & PyTorch, Gymnasium, OpenMP, MPI, Git \\
+\end{tabular}
+
+% ------------------ RESEARCH EXPERIENCE ------------------
+\cvsection{Research Experience}
+
+\textbf{Research Assistant}, \textit{Vision and Language Group}, CENIA (Supervised by Professor \href{https://scholar.google.com/citations?user=oKYALakAAAAJ&hl=en}{\textit{\underline{Hans Lobel}}}) \hfill 2024 -- Present
+\begin{itemize}
+    \item Engineered a decoder-free, sample-efficient world model using the Sketched Isotropic Gaussian Regularizer to prevent representation collapse, achieving 2x speedup over the STORM baseline on Atari-100k \mbox{(\textbf{ICLR 2027, under review})}.
+    \item Reimplemented from scratch a SOTA world model called STORM in PyTorch (\href{https://github.com/bcerdam/STORM-Replication}{\underline{GitHub}}), creating the training and evaluation pipelines that were leveraged as the foundational backbone for our own new decoder-free world model.
+\end{itemize}
+
+\vspace{6pt}
+\textbf{Research Assistant}, \textit{Neuro-Symbolic AI Group}, CENIA (Supervised by Professor \href{https://scholar.google.com/citations?user=Z1aTUGsAAAAJ&hl=es}{\textit{\underline{Cristóbal Rojas}}}) \hfill 2022 -- 2024
+\begin{itemize}
+    \item Designed and developed a novel algorithm to quantify the complexity of three-dimensional data from mice retinal time series, employing HPC with multithreading to handle intensive computational demands.
+    \item Contributed high-performance algorithms to co-author the preprint ``\textit{XBP1s as a Therapeutic Target to Preserve Retinal Function During Aging and Neurodegeneration}'' (\href{https://doi.org/10.1101/2025.07.03.662890}{\underline{bioRxiv}}).
+\end{itemize}
+
+% ------------------ EDUCATION ------------------
+\cvsection{Education}
+
+\textbf{Master’s Degree in Machine Learning}, Pontifical Catholic University of Chile \hfill 2025 -- Present (expected 2027-1)
+\begin{itemize}
+    \item Focused on World Models and Reinforcement Learning
+\end{itemize}
+
+\vspace{6pt}
+\textbf{Bachelor’s Degree in Engineering}, Pontifical Catholic University of Chile \hfill 2021 -- 2025
+\begin{itemize}
+    \item Major in Data Science
+\end{itemize}
+
+% ------------------ LANGUAGES ------------------
+\cvsection{Languages}
+\begin{tabular}{@{}p{3cm}l@{}}
+\textbf{Spanish} & \textit{Native} \\
+\textbf{English} & \textit{Professional Working Proficiency} \\
+\end{tabular}
+
+\end{document}
