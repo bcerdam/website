@@ -1,0 +1,82 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlength{\emergencystretch}{2em}
+\pagestyle{plain}
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+
+\title{\Large\bfseries Do JEPA-Style Latents Improve Atari Scores in Dreamer-Like Agents?}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+In Joint Embedding Predictive Architectures (JEPAs) like LeWM~\cite{maes2026leworldmodelstableendtoendjointembedding}, the latent is typically 1D, deterministic, and continuous (e.g., shape [384]), with unbounded real-valued components and no sampling step. By contrast, Sample Efficient World Models (SEWMs), a closely related branch of world models within model-based reinforcement learning that includes the Dreamer lineage~\cite{hafner2020dreamcontrollearningbehaviors,hafner2022masteringataridiscreteworld,hafner2024masteringdiversedomainsworld,hafner2025trainingagentsinsidescalable}, use a 2D, stochastic, discrete latent (e.g., shape [32, 32]). Each row is obtained by sampling from a categorical distribution over ``codes,'' producing a one-hot vector.
+Recent JEPA research has placed more emphasis on heuristic-free training, avoiding techniques such as the stop-gradient operator or EMA encoders. One motivation for the 1D deterministic continuous latent is that it can be paired with theoretically grounded methods, such as SIGReg, to help prevent representation collapse. This matters because JEPAs do not use a decoder. Dreamer-lineage decoder-free SEWMs, in contrast, have often relied on training choices such as stop-gradient. This raises a potential trade-off: can decoder-free SEWMs use a more principled training approach while retaining strong downstream agent performance?
+This brings us to the core question of this write-up: \textbf{Should decoder-free SEWMs of the Dreamer lineage keep using a 2D stochastic discrete latent, or should they adapt their latent into something more JEPA-like: a 1D deterministic continuous latent?}
+
+\section{Architecture}
+
+The world model used in this write-up is called UWM (Unnamed World Model). I created UWM by using my from-scratch replication of \href{https://arxiv.org/abs/2310.09615}{STORM: Efficient Stochastic Transformer based World Models for Reinforcement Learning} by Zhang et al. (2023) as a baseline, then applying changes to make it decoder-free. My STORM replication is available in the \href{https://github.com/bcerdam/STORM-Replication}{STORM-Replication GitHub repository}. I use the name UWM because this model is currently under double-blind review for ICLR 2027.
+
+\subsection{Structure of the latent}
+
+Both models use an encoder $e$ to map observations $o$ to latents. LeWM uses a 1D deterministic continuous latent $z_t^{\mathrm{1D}}$ of shape $(D,)$, with $D=384$. UWM produces categorical logits $\ell_t$ of shape $(K,C)$, where $K$ is the number of distributions and each distribution has $C$ codes. Sampling from these distributions gives the 2D stochastic discrete latent $z_t^{\mathrm{2D}}$, with one active code per row (Figure~\ref{fig:latent_comparison}).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{diagrams/latent_comparison.pdf}
+\caption{Latent representations and sampling in LeWM and UWM.}
+\label{fig:latent_comparison}
+\end{figure}
+
+Since neither model uses a decoder, both need a mechanism to prevent representation collapse of the latent. SIGReg~\cite{balestriero2025lejepaprovablescalableselfsupervised} is used in both models, but its application differs. My paper under review for ICLR 2027 explores this in depth. For this write-up, the only relevant thing to understand is that SIGReg prevents representational collapse.
+
+\subsection{Self-supervised training}
+
+To learn environment dynamics, both LeWM and UWM use self-supervised learning: given an observation $o_t$ and action $a_t$, they predict the latent representation of the next observation $o_{t+1}$. LeWM emphasizes simplicity and heuristic-free training, avoiding techniques such as the stop-gradient operator that lacks clear theoretical justification~\cite{ponce2026dual}.
+
+As discussed in the previous subsection, SIGReg prevents representation collapse. However, as shown in Figure~\ref{fig:wm_flow_comparison}, UWM also uses a training heuristic: stop-gradient, shown by the dashed lines and applied to the posterior logits $\ell_{t+1}$. This is needed to stabilize training because it helps prevent the encoder from reducing prediction error by making the logits at consecutive time steps too similar, instead of learning action-dependent dynamics. This heuristic is not required when using the 1D deterministic continuous latent. Without stop-gradient in the 2D stochastic discrete latent setup, UWM training becomes unstable and the agent does not learn a competitive policy. Figure~\ref{fig:wm_flow_comparison} marks the detachment on the path from the target logits $\ell_{t+1}$ to MSE.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{diagrams/wm_flow_comparison.pdf}
+\caption{Self-supervised training flows in LeWM and UWM.}
+\label{fig:wm_flow_comparison}
+\end{figure}
+
+\section{Performance comparison}
+
+To compare downstream agent performance across the two latent structures, we evaluate a representative subset of games from the Atari-100k benchmark~\cite{kaiser2024modelbasedreinforcementlearningatari} (the method used to derive the subset is described in my paper) and measure the mean reward obtained by the agent. The subset includes Kung Fu Master, Bank Heist, Breakout, James Bond, and Kangaroo. Both conditions use UWM and differ in latent structure: one uses its 2D stochastic discrete latent, while the other uses a 1D deterministic continuous latent. The latter is a UWM variant, not the original LeWM implementation.
+
+Figure~\ref{fig:latent_comparison_performance} shows the mean rewards obtained by the model using a 1D deterministic continuous latent (LeWM-like) versus a 2D stochastic discrete latent (UWM, Dreamer-like). The x-axis shows the number of environment steps taken by the agent, limited to 100k by the Atari-100k benchmark. The y-axis shows the mean reward. Each agent was evaluated every 20k environment steps, with 100 rollouts per evaluation.
+
+The results are clear: for downstream agent performance, the 2D stochastic discrete latent is crucial. It allows the agent to learn a policy in every game, while the world model using a 1D deterministic continuous latent learns a policy only in Breakout.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{rewards_per_game_latent_comparison.pdf}
+\caption{Mean reward on five Atari-100k games, comparing a 2D stochastic discrete latent (UWM, Dreamer-like) with a 1D deterministic continuous latent (LeWM-like).}
+\label{fig:latent_comparison_performance}
+\end{figure}
+
+\section{Discussion and Conclusion}
+
+LeWM demonstrates that a simple world model can be trained without heuristics such as the stop-gradient operator and still perform well on Model Predictive Control benchmarks. However, Section 3 shows that UWM performs poorly on the Atari-100k subset when using a 1D deterministic continuous latent without stop-gradient. UWM scores much better with the 2D stochastic discrete latent (as proposed in DreamerV2).
+
+So, should Dreamer-lineage models such as UWM replace the 2D stochastic discrete latent with a more theoretically grounded 1D deterministic continuous latent? The answer is: Not yet. The drop in agent performance is clear. However, I believe training approaches in JEPAs and SEWMs are converging, so the answer may change as both fields develop.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
